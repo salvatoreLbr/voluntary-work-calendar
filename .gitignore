@@ -1,3 +1,9 @@
+input/*
+input_csv/*
+secrets.toml
+.vscode
+*.db
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
