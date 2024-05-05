@@ -32,7 +32,7 @@ if len(volunteers_name_list) > 0:
         with col_volunteer:
             nome_volontario = st.selectbox(
                 label="Volontario",
-                options=volunteers_name_list
+                options=sorted(volunteers_name_list)
             )
 
         submit_button = st.form_submit_button("Conferma")

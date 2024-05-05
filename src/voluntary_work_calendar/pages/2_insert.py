@@ -34,7 +34,7 @@ if len(volunteers_name_list) > 0:
         with col_volunteer:
             nome_volontario = st.selectbox(
                 label="Volontario",
-                options=volunteers_name_list
+                options=sorted(volunteers_name_list)
             )
         st.write("Seleziona l'orario di inizio e di fine del turno")
         #: Create columns for time

@@ -62,7 +62,7 @@ if "admin" in st.session_state.keys():
                     with st.form("delete_volunteer", clear_on_submit=True):
                         volunteer_name_selected = st.selectbox(
                             label="Seleziona il volontario da eliminare",
-                            options=volunteers_name_list
+                            options=sorted(volunteers_name_list)
                         )
                         remove_volunteer_button = st.form_submit_button("Rimuovi")
                         if remove_volunteer_button:
