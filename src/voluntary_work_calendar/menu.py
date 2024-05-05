@@ -15,23 +15,32 @@ def check_login():
 
 def init_user_page():
     #: Set page config
-    st.set_page_config(page_title="Calendario - Home page", initial_sidebar_state=st.session_state.sidebar_state)
+    st.set_page_config(
+        page_title="Calendario - Home page",
+        initial_sidebar_state=st.session_state.sidebar_state,
+    )
     menu_button()
     set_sidebar()
     st.header("Benvenuto {}".format(st.session_state.user_name))
     st.write("Clicca il pulsante menù per accedere al pannello di controllo.")
     st.write("Una volta aperto il pannello di controllo:")
-    st.write("- Per vedere le persone che hanno confermato la loro presenza clicca **Calendario**  \n- Per inserire una presenza clicca **Inserisci presenza**  \n- Per rimuovere la presenza clicca **Cancella presenza**")
+    st.write(
+        "- Per vedere le persone che hanno confermato la loro presenza clicca **Calendario**  \n- Per inserire una presenza clicca **Inserisci presenza**  \n- Per rimuovere la presenza clicca **Cancella presenza**"
+    )
 
 
 def set_sidebar():
     #: Show a navigation menu for authenticated
     with st.sidebar:
-        calendar = st.button(label="Calendario", on_click=open_page, args=('calendar',))
-        insert = st.button(label="Inserisci presenza", on_click=open_page, args=('insert',))
-        delete = st.button(label="Cancella presenza", on_click=open_page, args=('delete',))
-        admin = st.button(label="Impostazioni", on_click=open_page, args=('admin',))
-        logout = st.button(label="Esci", on_click=open_page, args=('logout',))
+        calendar = st.button(label="Calendario", on_click=open_page, args=("calendar",))
+        insert = st.button(
+            label="Inserisci presenza", on_click=open_page, args=("insert",)
+        )
+        delete = st.button(
+            label="Cancella presenza", on_click=open_page, args=("delete",)
+        )
+        admin = st.button(label="Impostazioni", on_click=open_page, args=("admin",))
+        logout = st.button(label="Esci", on_click=open_page, args=("logout",))
         if calendar:
             st.switch_page("pages/1_calendar.py")
         if insert:

@@ -8,6 +8,7 @@ from voluntary_work_calendar.config import Config
 # Initialize CryptContext/bcrypt
 pwd_context = bcrypt.using(rounds=Config.ROUNDS)
 
+
 def check_rules_password(psw: str) -> Tuple[bool, str]:
     error_in_psw = False
     type_response = "passwordchanged"
@@ -23,7 +24,7 @@ def check_rules_password(psw: str) -> Tuple[bool, str]:
         # "La password deve contenere almeno una lettera maiuscola"
         type_response = "La password deve contenere almeno una lettera maiuscola"
         error_in_psw = True
-    #TODO: aggiungere check che ci sia almeno un carattere speciale
+    # TODO: aggiungere check che ci sia almeno un carattere speciale
 
     return error_in_psw, type_response
 

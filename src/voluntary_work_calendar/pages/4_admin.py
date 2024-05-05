@@ -1,12 +1,7 @@
 import streamlit as st
 
 from voluntary_work_calendar.auth.authorization import verify_hash
-from voluntary_work_calendar.db.crud import (
-    get_table,
-)
 from voluntary_work_calendar.db.gateway import CSVGateway, DBGateway
-from voluntary_work_calendar.db.main import get_db
-from voluntary_work_calendar.db.models import Users
 from voluntary_work_calendar.menu import check_login, set_sidebar
 from voluntary_work_calendar.utils import hide_sidebar, menu_button
 
@@ -15,7 +10,10 @@ from voluntary_work_calendar.utils import hide_sidebar, menu_button
 gateway = CSVGateway() if st.session_state.gateway == "csv" else DBGateway()
 
 #: Set page config
-st.set_page_config(page_title="Calendario - Area Admin", initial_sidebar_state=st.session_state.sidebar_state)
+st.set_page_config(
+    page_title="Calendario - Area Admin",
+    initial_sidebar_state=st.session_state.sidebar_state,
+)
 
 #: Show menu button
 menu_button()
@@ -33,7 +31,7 @@ with st.container():
             login_button = st.form_submit_button("Sblocca area")
         if login_button:
             users_df = gateway.get_user()
-            users_df = users_df.loc[users_df.username=="admin"]
+            users_df = users_df.loc[users_df.username == "admin"]
             if users_df.shape[0] == 0:
                 st.warning("Non vi è stato definito un admin per questo sito")
             else:
@@ -62,7 +60,7 @@ if "admin" in st.session_state.keys():
                     with st.form("delete_volunteer", clear_on_submit=True):
                         volunteer_name_selected = st.selectbox(
                             label="Seleziona il volontario da eliminare",
-                            options=sorted(volunteers_name_list)
+                            options=sorted(volunteers_name_list),
                         )
                         remove_volunteer_button = st.form_submit_button("Rimuovi")
                         if remove_volunteer_button:
@@ -71,6 +69,8 @@ if "admin" in st.session_state.keys():
                     st.info("Non ci sono volontari in lista")
 
 #: Hide sidebar
-if (st.session_state.sidebar_state == 'expanded') and (st.session_state.menu_button_clicked == False):
+if (st.session_state.sidebar_state == "expanded") and (
+    st.session_state.menu_button_clicked == False
+):
     hide_sidebar()
     st.rerun()

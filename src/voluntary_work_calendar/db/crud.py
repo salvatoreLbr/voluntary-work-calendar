@@ -13,11 +13,7 @@ def create_table(
     db_session: Session,
     model: Base,  # type: ignore
     info: List[
-        Union[
-            schemas.CalendarCreate,
-            schemas.UserInDBCreate,
-            schemas.VolunteersCreate
-        ]
+        Union[schemas.CalendarCreate, schemas.UserInDBCreate, schemas.VolunteersCreate]
     ],
 ):
     instances = tuple([model(**row) for row in info])

@@ -1,5 +1,4 @@
 from pathlib import Path
-import streamlit as st
 
 
 def create_input_path(test: bool) -> Path:
@@ -15,4 +14,3 @@ def exist_file(path: Path) -> bool:
         print(text)
         return False
     return True
-

@@ -5,7 +5,7 @@ from voluntary_work_calendar.db.gateway import DBGateway
 
 
 def hide_sidebar():
-    st.session_state.sidebar_state = 'collapsed'
+    st.session_state.sidebar_state = "collapsed"
 
 
 def menu_button():
@@ -18,15 +18,15 @@ def menu_button():
             }
         </style>
         """,
-        unsafe_allow_html=True
+        unsafe_allow_html=True,
     )
     col_menu = st.columns([1])
     #: Toggle sidebar state between 'expanded' and 'collapsed'.
     with col_menu[0]:
-        menu_button = st.button('Menù')
+        menu_button = st.button("Menù")
         if menu_button:
             st.session_state.menu_button_clicked = True
-            st.session_state.sidebar_state = 'expanded'
+            st.session_state.sidebar_state = "expanded"
             st.rerun()
 
 

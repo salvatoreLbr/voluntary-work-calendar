@@ -9,7 +9,10 @@ from voluntary_work_calendar.utils import menu_button, hide_sidebar
 gateway = CSVGateway() if st.session_state.gateway == "csv" else DBGateway()
 
 #: Set page config
-st.set_page_config(page_title="Calendario - rimuovi presenza", initial_sidebar_state=st.session_state.sidebar_state)
+st.set_page_config(
+    page_title="Calendario - rimuovi presenza",
+    initial_sidebar_state=st.session_state.sidebar_state,
+)
 
 #: Show menu button
 menu_button()
@@ -25,28 +28,25 @@ if len(volunteers_name_list) > 0:
         #: Create columns for date and volunteer
         col_data, col_volunteer = st.columns(2)
         with col_data:
-            data = st.date_input(
-                label="Data",
-                format="DD/MM/YYYY"
-            )
+            data = st.date_input(label="Data", format="DD/MM/YYYY")
         with col_volunteer:
             nome_volontario = st.selectbox(
-                label="Volontario",
-                options=sorted(volunteers_name_list)
+                label="Volontario", options=sorted(volunteers_name_list)
             )
 
         submit_button = st.form_submit_button("Conferma")
         if submit_button:
-            result = gateway.delete_presence(
-                data=data,
-                name=nome_volontario
-            )
+            result = gateway.delete_presence(data=data, name=nome_volontario)
             if result:
                 st.success("Presenza eliminata con successo")
 else:
-    st.warning("Non c'è alcun volontario registrato. Inserisci almeno un volontario dal pannello 'Impostazioni'.")
+    st.warning(
+        "Non c'è alcun volontario registrato. Inserisci almeno un volontario dal pannello 'Impostazioni'."
+    )
 
 #: Hide sidebar
-if (st.session_state.sidebar_state == 'expanded') and (st.session_state.menu_button_clicked == False):
+if (st.session_state.sidebar_state == "expanded") and (
+    st.session_state.menu_button_clicked == False
+):
     hide_sidebar()
     st.rerun()

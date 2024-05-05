@@ -1,7 +1,11 @@
 import streamlit as st
 from sqlalchemy.orm.session import Session
 
-from voluntary_work_calendar.auth.password import check_rules_password, get_hash, verify_hash
+from voluntary_work_calendar.auth.password import (
+    check_rules_password,
+    get_hash,
+    verify_hash,
+)
 from voluntary_work_calendar.db.crud import (
     create_table,
     get_table,
@@ -36,7 +40,7 @@ def authenticate_user(username: str, password: str) -> Users:
         st.session_state["user_name"] = user_name
         st.session_state["user_id"] = user_id
         st.session_state.role = "user"
-        st.session_state.sidebar_state = 'collapsed'
+        st.session_state.sidebar_state = "collapsed"
         st.session_state.menu_button_clicked = False
     st.switch_page("app.py")
 
@@ -45,9 +49,7 @@ def create_new_user(db: Session, username: str, password: str) -> str:
     error_in_psw, type_response = check_rules_password(psw=password)
     if error_in_psw:
         raise Exception(
-            "!!! Password not valid for this reason: {} !!!".format(
-                type_response
-            )
+            "!!! Password not valid for this reason: {} !!!".format(type_response)
         )
     users_df = get_table(db_session=db, model=Users)
     if users_df.shape[0] > 0:
