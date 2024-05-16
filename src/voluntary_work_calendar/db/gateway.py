@@ -262,6 +262,7 @@ class CSVGateway(Gateway):
         return volunteers_name_list
 
     def init_csv_gateway(self):
+        #: Add user and admin
         users_df = self.get_user()
         idx_user = users_df.username == "volontario"
         if idx_user.sum() == 0:
@@ -275,6 +276,41 @@ class CSVGateway(Gateway):
                 role="admin",
                 clean_password=Config.PSW_ADMIN,
             )
+        #: Add volunteer's names
+        volunteers_list_db = self.get_volunteers_name()
+        if len(volunteers_list_db) == 0:
+            volunteers_list = [
+                "Graziella A.",
+                "Angela U.",
+                "Gelsomina S.",
+                "Lucia S.",
+                "Ernestina B.",
+                "Elena Z.",
+                "Elda T.",
+                "Silvia M.", 
+                "Ornella L. P.",
+                "Claudia F.",
+                "Claudia L. C.",
+                "Luciana S.",
+                "Silvia C.",
+                "Marina B.",
+                "Stefania N.",
+                "Maria P.",
+                "Loretta C.",
+                "Giusy C.",
+                "Daniela C.",
+                "Simona L.",
+                "Enrica P.",
+                "Valentina S.",
+                "Salvatore A.",
+                "Oscar B.",
+                "Francesco M.",
+                "Franco C. G.",
+                "Fulvio F.",
+                "Marco U."
+            ]
+            for volunteer_name in volunteers_list:
+                self.insert_new_volunteer(name=volunteer_name)
 
     def insert_new_volunteer(self, name: str) -> bool:
         filename, file_path, fields, df, starting_id = self.get_file(table=Volunteers)
