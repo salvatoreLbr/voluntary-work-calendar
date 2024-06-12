@@ -23,7 +23,7 @@ class Users(Base):
     id = Column(Integer, primary_key=True)
     username = Column(String(100), unique=True)
     role = Column(String(100))
-    hashed_password = Column(String)
+    hashed_password = Column(String(100))
 
 
 class Volunteers(Base):

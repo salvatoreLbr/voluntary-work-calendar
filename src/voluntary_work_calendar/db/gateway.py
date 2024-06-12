@@ -287,7 +287,7 @@ class CSVGateway(Gateway):
                 "Ernestina B.",
                 "Elena Z.",
                 "Elda T.",
-                "Silvia M.", 
+                "Silvia M.",
                 "Ornella L. P.",
                 "Claudia F.",
                 "Claudia L. C.",
@@ -307,7 +307,7 @@ class CSVGateway(Gateway):
                 "Francesco M.",
                 "Franco C. G.",
                 "Fulvio F.",
-                "Marco U."
+                "Marco U.",
             ]
             for volunteer_name in volunteers_list:
                 self.insert_new_volunteer(name=volunteer_name)

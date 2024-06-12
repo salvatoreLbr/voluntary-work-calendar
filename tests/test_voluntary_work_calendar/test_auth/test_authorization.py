@@ -13,18 +13,11 @@ def test_create_new_user():
         username="lala",
         password="Hello123?",
     )
-    users_df = get_table(
-        db_session=get_db(),
-        model=Users
-    )
+    users_df = get_table(db_session=get_db(), model=Users)
     assert "lala" in users_df.username.unique(), "!!! Error in creating new users !!!"
 
     #: Delete test user
-    delete_record(
-        db_session=get_db(),
-        model=Users,
-        filter={"username": "=='lala'"}
-    )
+    delete_record(db_session=get_db(), model=Users, filter={"username": "=='lala'"})
 
     #: Raise exception
     with raises(Exception):

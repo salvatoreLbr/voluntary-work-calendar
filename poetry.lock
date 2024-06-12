@@ -740,6 +740,18 @@ python-versions = ">=3.8"
 windows-terminal = ["colorama (>=0.4.6)"]
 
 [[package]]
+name = "pymysql"
+version = "1.1.1"
+description = "Pure Python MySQL Driver"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.extras]
+ed25519 = ["PyNaCl (>=1.4.0)"]
+rsa = ["cryptography"]
+
+[[package]]
 name = "pyparsing"
 version = "3.1.2"
 description = "pyparsing module - Classes and methods to define and execute parsing grammars"
@@ -1138,7 +1150,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-ena
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<3.9.7 || >3.9.7,<3.11"
-content-hash = "6c7a761234e4a12a27040440f12f600be53d0f01a7de68f7234f24be4f516c83"
+content-hash = "4f86158b701bdc32e897298eae3066fbc27080cd4a4facd43c3d1cdad0446b47"
 
 [metadata.files]
 alembic = []
@@ -1211,6 +1223,7 @@ pydantic = []
 pydantic-core = []
 pydeck = []
 pygments = []
+pymysql = []
 pyparsing = []
 pytest = [
     {file = "pytest-5.4.3-py3-none-any.whl", hash = "sha256:5c0db86b698e8f170ba4582a492248919255fcd4c79b1ee64ace34301fb589a1"},

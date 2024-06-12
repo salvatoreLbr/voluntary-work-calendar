@@ -8,7 +8,9 @@ def test_csv_gateway():
     gateway.insert_new_volunteer(name="Salvatore")
 
     #: Test insert_presence
-    gateway.insert_presence(data="2023-12-31", orario_from="10:00", orario_to="18:00", name="Salvatore")
+    gateway.insert_presence(
+        data="2023-12-31", orario_from="10:00", orario_to="18:00", name="Salvatore"
+    )
 
     #: Test get_calendar
     _ = gateway.get_calendar()
