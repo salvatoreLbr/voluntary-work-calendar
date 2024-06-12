@@ -5,11 +5,10 @@ from voluntary_work_calendar.menu import init_user_page
 
 
 #: Set gateway
-st.session_state["gateway"] = "csv"
+st.session_state["gateway"] = "db"
 #: Set gateway
 gateway = CSVGateway() if st.session_state.gateway == "csv" else DBGateway()
-if st.session_state.gateway == "csv":
-    gateway.init_csv_gateway()
+gateway.init_db()
 
 # Initialize st.session_state.role to None
 if "role" not in st.session_state:

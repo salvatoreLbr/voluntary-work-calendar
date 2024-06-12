@@ -13,6 +13,37 @@ from voluntary_work_calendar.db.main import get_db
 from voluntary_work_calendar.db.models import *
 
 
+VOLUNTEERS_LIST = [
+    "Graziella A.",
+    "Angela U.",
+    "Gelsomina S.",
+    "Lucia S.",
+    "Ernestina B.",
+    "Elena Z.",
+    "Elda T.",
+    "Silvia M.",
+    "Ornella L. P.",
+    "Claudia F.",
+    "Claudia L. C.",
+    "Luciana S.",
+    "Silvia C.",
+    "Marina B.",
+    "Stefania N.",
+    "Maria P.",
+    "Loretta C.",
+    "Giusy C.",
+    "Daniela C.",
+    "Simona L.",
+    "Enrica P.",
+    "Valentina S.",
+    "Salvatore A.",
+    "Oscar B.",
+    "Francesco M.",
+    "Franco C. G.",
+    "Fulvio F.",
+    "Marco U.",
+]
+
 class Gateway(ABC):
     @abstractmethod
     def delete_presence(data: date, name: str) -> bool:
@@ -32,6 +63,10 @@ class Gateway(ABC):
 
     @abstractmethod
     def get_volunteers_name() -> List[str]:
+        ...
+
+    @abstractmethod
+    def init_db():
         ...
 
     @abstractmethod
@@ -92,10 +127,10 @@ class DBGateway(Gateway):
             filter={"name": "=='{}'".format(name)},
         )
         if df.shape[0] == 0:
-            st.success("Volontario rimosso con successo")
+            print("Volontario rimosso con successo")
             return True
         else:
-            st.warning("!!! Errore !!! Volontario non rimosso dalla lista")
+            print("!!! Errore !!! Volontario non rimosso dalla lista")
             return False
 
     def get_calendar(self) -> pd.DataFrame:
@@ -113,6 +148,27 @@ class DBGateway(Gateway):
             volunteers_name_list = []
         return volunteers_name_list
 
+    def init_db(self):
+        #: Add user and admin
+        users_df = self.get_user()
+        idx_user = users_df.username == "volontario"
+        if idx_user.sum() == 0:
+            self.insert_user(
+                username=Config.USERNAME_USER,
+                role="user",
+                clean_password=Config.PSW_USER,
+            )
+            self.insert_user(
+                username=Config.USERNAME_ADMIN,
+                role="admin",
+                clean_password=Config.PSW_ADMIN,
+            )
+        #: Add volunteer's names
+        volunteers_list_db = self.get_volunteers_name()
+        if len(volunteers_list_db) == 0:
+            for volunteer_name in VOLUNTEERS_LIST:
+                self.insert_new_volunteer(name=volunteer_name)
+
     def insert_new_volunteer(self, name: str) -> bool:
         create_table(
             db_session=get_db(),
@@ -129,10 +185,10 @@ class DBGateway(Gateway):
             filter={"name": "=='{}'".format(name)},
         )
         if df.shape[0] > 0:
-            st.success("Volontario aggiunto alla lista")
+            print("Volontario aggiunto alla lista")
             return True
         else:
-            st.warning("!!! Errore !!! Volontario non aggiunto alla lista")
+            print("!!! Errore !!! Volontario non aggiunto alla lista")
             return False
 
     def insert_presence(
@@ -161,10 +217,10 @@ class DBGateway(Gateway):
             },
         )
         if df.shape[0] > 0:
-            st.success("Presenza inserita")
+            print("Presenza inserita")
             return True
         else:
-            st.warning("!!! Errore !!! Presenza non inserita")
+            print("!!! Errore !!! Presenza non inserita")
             return False
 
     def insert_user(self, username: str, role: str, clean_password: str) -> bool:
@@ -261,7 +317,7 @@ class CSVGateway(Gateway):
             volunteers_name_list = []
         return volunteers_name_list
 
-    def init_csv_gateway(self):
+    def init_db(self):
         #: Add user and admin
         users_df = self.get_user()
         idx_user = users_df.username == "volontario"
@@ -279,37 +335,7 @@ class CSVGateway(Gateway):
         #: Add volunteer's names
         volunteers_list_db = self.get_volunteers_name()
         if len(volunteers_list_db) == 0:
-            volunteers_list = [
-                "Graziella A.",
-                "Angela U.",
-                "Gelsomina S.",
-                "Lucia S.",
-                "Ernestina B.",
-                "Elena Z.",
-                "Elda T.",
-                "Silvia M.",
-                "Ornella L. P.",
-                "Claudia F.",
-                "Claudia L. C.",
-                "Luciana S.",
-                "Silvia C.",
-                "Marina B.",
-                "Stefania N.",
-                "Maria P.",
-                "Loretta C.",
-                "Giusy C.",
-                "Daniela C.",
-                "Simona L.",
-                "Enrica P.",
-                "Valentina S.",
-                "Salvatore A.",
-                "Oscar B.",
-                "Francesco M.",
-                "Franco C. G.",
-                "Fulvio F.",
-                "Marco U.",
-            ]
-            for volunteer_name in volunteers_list:
+            for volunteer_name in VOLUNTEERS_LIST:
                 self.insert_new_volunteer(name=volunteer_name)
 
     def insert_new_volunteer(self, name: str) -> bool:

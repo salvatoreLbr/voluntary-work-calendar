@@ -44,7 +44,8 @@ def get_table(db_session: Session, model: Base, filter: Optional[Dict[str, str]]
     #: Get table from db
     db_obj = db_session.query(model).all()
     #: Transform obj db in pd.DataFrame
-    df = pd.DataFrame([db_row.__dict__ for db_row in db_obj])
+    fields = [x for x in model.__dict__.keys() if x[0]!="_"]
+    df = pd.DataFrame([db_row.__dict__ for db_row in db_obj], columns=fields)
     # Close session
     db_session.expire_all()
     db_session.close_all()
