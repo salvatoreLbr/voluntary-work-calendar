@@ -44,6 +44,7 @@ VOLUNTEERS_LIST = [
     "Marco U.",
 ]
 
+
 class Gateway(ABC):
     @abstractmethod
     def delete_presence(data: date, name: str) -> bool:

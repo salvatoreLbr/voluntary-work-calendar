@@ -6,6 +6,7 @@ from voluntary_work_calendar.auth.password import (
     get_hash,
     verify_hash,
 )
+from voluntary_work_calendar.config import Config
 from voluntary_work_calendar.db.crud import (
     create_table,
     get_table,
@@ -15,10 +16,11 @@ from voluntary_work_calendar.db.models import Users
 
 
 def authenticate_user(username: str, password: str) -> Users:
-    gateway = CSVGateway() if st.session_state.gateway == "csv" else DBGateway()
+    gateway = CSVGateway() if Config.GATEWAY_TYPE == "csv" else DBGateway()
     users_df = gateway.get_user()
     #: Check if there is almost an user
     if users_df.shape[0] == 0:
+        print("nessun utente in DB")
         st.switch_page("app.py")
     #: Get username if exists
     idx_username = users_df.username == username
@@ -26,13 +28,13 @@ def authenticate_user(username: str, password: str) -> Users:
     if idx_username.sum() == 0:
         set_user = False
         st.warning("L'utente non esiste")
-        raise Exception()
+        raise Exception("L'utente non esiste")
     #: Check password
     user_password = users_df.loc[idx_username, "hashed_password"].values[0]
     if not verify_hash(password, user_password):
         set_user = False
         st.warning("Password errata")
-        raise Exception()
+        raise Exception("Password errata")
     #: Get username and retrieve page
     user_name = users_df.loc[idx_username, "username"].values[0]
     user_id = users_df.loc[idx_username, "id"].values[0]

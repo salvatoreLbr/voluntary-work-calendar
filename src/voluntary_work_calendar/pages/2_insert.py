@@ -1,13 +1,14 @@
 import datetime
 import streamlit as st
 
+from voluntary_work_calendar.config import Config
 from voluntary_work_calendar.db.gateway import CSVGateway, DBGateway
 from voluntary_work_calendar.menu import check_login, set_sidebar
 from voluntary_work_calendar.utils import hide_sidebar, menu_button
 
 
 #: Set gateway
-gateway = CSVGateway() if st.session_state.gateway == "csv" else DBGateway()
+gateway = CSVGateway() if Config.GATEWAY_TYPE == "csv" else DBGateway()
 
 #: Set page config
 st.set_page_config(
